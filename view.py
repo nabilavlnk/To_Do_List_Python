@@ -15,9 +15,9 @@ class TaskView:
             print("There are no task")
             return 
         
-        print("-" * 50)
-        print(f"| {'Task Name':<20} | {'Due Date':<12} | {'Status':<8} |")
-        print("-" * 50)
+        print("-" * 58)
+        print(f"| {'Task Name':<20} | {'Due Date':<20} | {'Status':<8} |")
+        print("-" * 58)
 
         for task in(tasks):
             if task.status == True:
@@ -25,9 +25,9 @@ class TaskView:
             else:
                 status = "✗"
             #return self.tasks
-            print(f"| {task.task_name:<20} | {task.due_date:<12} | {status:^8} |")
+            print(f"| {task.task_name:<20} | {task.due_date:<20} | {status:^8} |")
 
-        print("-" * 50)
+        print("-" * 58)
             #print(f"{task.task_name} (Due: {task.due_date}) [{status}]")
         
     def show_message(self, message):

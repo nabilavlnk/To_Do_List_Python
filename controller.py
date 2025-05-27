@@ -1,3 +1,5 @@
+from datetime import datetime
+
 class TaskController:
     def __init__(self, model, view):
         self.model = model
@@ -23,9 +25,15 @@ class TaskController:
                         self.view.show_message(f"Task '{task_name}' already exist!")
                     else:
                         due_date = input("Enter deadline date (YYYY-MM-DD) : ")
-                        self.model.add_task(task_name, due_date)
-                        self.model.save_to_csv()
-                        self.view.show_message(f"Task '{task_name}' added successfully!")
+                        try:
+                            due_date_obj = datetime.strptime(due_date, "%Y-%m-%d")
+                            due_date_formatted = due_date_obj.strftime("%d %B %Y")
+                            self.model.add_task(task_name, due_date_formatted)
+                            self.model.save_to_csv()
+                            self.view.show_message(f"Task '{task_name}' added successfully!")
+                        except ValueError:
+                            self.view.show_message("Invalid date format. Use YYY-MM-DD.")
+                            continue
                     print()
 
                 elif choice == 3:
@@ -55,6 +63,7 @@ class TaskController:
 
                 elif choice == 4:
                     # hapus satu tugas
+                    tasks = self.model.view_task()
                     self.view.show_tasks(tasks)
                     task_name = input("Enter task name : ")
                     if self.model.delete_task(task_name):
@@ -77,6 +86,7 @@ class TaskController:
 
                 elif choice == 6:
                     # status marked as done
+                    tasks = self.model.view_task()
                     self.view.show_tasks(tasks)
                     confirm_marked = input("Enter the name of completed task : ")
                     if self.model.mark_task_as_done(confirm_marked):

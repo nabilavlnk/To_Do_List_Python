@@ -1,5 +1,4 @@
 import csv
-import datetime
 
 class Task:
     def __init__(self, task_name, due_date, status=False):
